@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
 
             if (jumpCount < 1) {
-                Debug.Log(jumpCount);
+
                 jumpCount += 1;
                 playerRigidBody.AddForce(Vector3.up * jumpPower);
             }
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
     private void OnCollisionEnter(Collision collision) {
 
         if (collision.gameObject.tag == "Stage") {
-            Debug.Log("Stageにぶつかった");
+
             jumpCount = 0;
         }
     }
