@@ -72,12 +72,12 @@ public class PlayerController : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
 
-        if (collision.gameObject.tag == "Stage") {
+        if (collision.gameObject.CompareTag("Stage")) {
 
             jumpCount = 0;
         }
 
-        if (collision.gameObject.tag == "Coin") {
+        if (collision.gameObject.CompareTag("Coin")) {
 
             coinCount++;
             coinLabel.text = coinCount.ToString();
