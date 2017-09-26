@@ -5,17 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class StartDirector : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Update() {
 
         if (Input.GetKey(KeyCode.Space)) {
 
             SceneManager.LoadScene("Main");
         }
-	}
+    }
 }

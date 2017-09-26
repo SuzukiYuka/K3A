@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
+    
     public Transform target;
+
     Vector3 offset = new Vector3(0, 1, -10);
     float range = 4f;
     float distance = 0;
 
-	// Use this for initialization
-	void Start () {
-
-        transform.position = target.position + offset;
-	}
-	
-	// Update is called once per frame
 	void Update () {
         distance = transform.position.x - target.position.x;
 

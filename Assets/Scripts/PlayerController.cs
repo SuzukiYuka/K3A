@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
+    
     float speed = 5.0f;
     float jumpSpeed = 200f;
     float groundLine = 20.0f;
@@ -13,14 +14,12 @@ public class PlayerController : MonoBehaviour {
     int jumpCount = 0;
     int coinCount = 0;
 
-    private bool isJump {
+    bool isJump {
         
         get { return jumpCount != 0; }
     }
 
     public Text coinLabel;
-
-
 
     void Start() {
 
@@ -89,5 +88,4 @@ public class PlayerController : MonoBehaviour {
             Destroy(collision.collider.gameObject);
         }
     }
-
 }
