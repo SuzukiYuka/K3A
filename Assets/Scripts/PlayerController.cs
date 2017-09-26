@@ -13,6 +13,11 @@ public class PlayerController : MonoBehaviour {
     int jumpCount = 0;
     int coinCount = 0;
 
+    private bool isJump {
+        
+        get { return jumpCount != 0; }
+    }
+
     public Text coinLabel;
 
 
@@ -26,7 +31,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.D)) {
 
-            if (!isJump(jumpCount)) {
+            if (!isJump){
 
                 playerRigidBody.velocity = new Vector3(speed, 0, 0);
             }
@@ -34,7 +39,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.A)) {
 
-            if (!isJump(jumpCount)) {
+            if (!isJump) {
 
                 playerRigidBody.velocity = new Vector3(-speed, 0, 0);
             }
@@ -42,7 +47,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space)) {
 
-            if (!isJump(jumpCount)) {
+            if (!isJump) {
 
                 jumpCount += 1;
                 playerRigidBody.AddForce(Vector3.up * jumpPower);
@@ -51,14 +56,14 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.D)) {
 
-            if(isJump(jumpCount)) {
+            if (isJump) {
 
                 playerRigidBody.AddForce(Vector3.right * jumpSpeed);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.A)) {
-            if (isJump(jumpCount)) {
+            if (isJump) {
 
                 playerRigidBody.AddForce((Vector3.left * jumpSpeed));
             }
@@ -82,17 +87,6 @@ public class PlayerController : MonoBehaviour {
             coinCount++;
             coinLabel.text = coinCount.ToString();
             Destroy(collision.collider.gameObject);
-        }
-    }
-
-    private bool isJump(int count) {
-        
-        if (count == 0) {
-        
-            return false;
-        } else {
-
-            return true;
         }
     }
 
