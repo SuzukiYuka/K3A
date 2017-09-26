@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-    
+
     float speed = 5.0f;
     float jumpSpeed = 200f;
     float groundLine = 20.0f;
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
     int coinCount = 0;
 
     bool isJump {
-        
+
         get { return jumpCount != 0; }
     }
 
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.D)) {
 
-            if (!isJump){
+            if (!isJump) {
 
                 playerRigidBody.velocity = new Vector3(speed, 0, 0);
             }
