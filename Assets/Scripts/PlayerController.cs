@@ -5,33 +5,56 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
     float speed = 5.0f;
+    float jumpSpeed = 200f;
     float groundLine = 20.0f;
     float jumpPower = 400.0f;
     Rigidbody playerRigidBody;
     int jumpCount = 0;
 
     void Start() {
+
         playerRigidBody = GetComponent<Rigidbody>();
     }
 
     void Update() {
 
-        if (Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.D)) {
 
-            transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+            if (!isJump(jumpCount)) {
+
+                playerRigidBody.velocity = new Vector3(speed, 0, 0);
+            }
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow)) {
+        if (Input.GetKey(KeyCode.A)) {
 
-            transform.position += new Vector3(-speed * Time.deltaTime, 0, 0);
+            if (!isJump(jumpCount)) {
+
+                playerRigidBody.velocity = new Vector3(-speed, 0, 0);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
 
-            if (jumpCount < 1) {
+            if (!isJump(jumpCount)) {
 
                 jumpCount += 1;
                 playerRigidBody.AddForce(Vector3.up * jumpPower);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.D)) {
+
+            if(isJump(jumpCount)) {
+
+                playerRigidBody.AddForce(Vector3.right * jumpSpeed);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.A)) {
+            if (isJump(jumpCount)) {
+
+                playerRigidBody.AddForce((Vector3.left * jumpSpeed));
             }
         }
 
@@ -46,6 +69,17 @@ public class PlayerController : MonoBehaviour {
         if (collision.gameObject.tag == "Stage") {
 
             jumpCount = 0;
+        }
+    }
+
+    private bool isJump(int count) {
+        
+        if (count == 0) {
+        
+            return false;
+        } else {
+
+            return true;
         }
     }
 
