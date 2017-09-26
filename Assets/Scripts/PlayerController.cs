@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     float speed = 5.0f;
@@ -10,6 +11,11 @@ public class PlayerController : MonoBehaviour {
     float jumpPower = 400.0f;
     Rigidbody playerRigidBody;
     int jumpCount = 0;
+    int coinCount = 0;
+
+    public Text coinLabel;
+
+
 
     void Start() {
 
@@ -69,6 +75,13 @@ public class PlayerController : MonoBehaviour {
         if (collision.gameObject.tag == "Stage") {
 
             jumpCount = 0;
+        }
+
+        if (collision.gameObject.tag == "Coin") {
+
+            coinCount++;
+            coinLabel.text = coinCount.ToString();
+            Destroy(collision.collider.gameObject);
         }
     }
 
