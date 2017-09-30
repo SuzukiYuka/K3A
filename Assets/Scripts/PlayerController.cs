@@ -6,67 +6,37 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
+    // public
+    public Text coinLabel;
+
+    // private
     float speed = 5.0f;
     float jumpSpeed = 200f;
     float groundLine = 20.0f;
     float jumpPower = 400.0f;
-    Rigidbody playerRigidBody;
-    int jumpCount = 0;
     int coinCount = 0;
 
-    bool isJump {
-
-        get { return jumpCount != 0; }
-    }
-
-    public Text coinLabel;
+    Animator animator;
 
     void Start() {
 
-        playerRigidBody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
     }
 
     void Update() {
 
-        if (Input.GetKey(KeyCode.D)) {
-
-            if (!isJump) {
-
-                playerRigidBody.velocity = new Vector3(speed, 0, 0);
-            }
-        }
-
-        if (Input.GetKey(KeyCode.A)) {
-
-            if (!isJump) {
-
-                playerRigidBody.velocity = new Vector3(-speed, 0, 0);
-            }
-        }
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         if (Input.GetKeyDown(KeyCode.Space)) {
 
-            if (!isJump) {
+            animator.SetBool("Jump", true);
+        } else {
 
-                jumpCount += 1;
-                playerRigidBody.AddForce(Vector3.up * jumpPower);
-            }
+            animator.SetBool("Jump", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.D)) {
-
-            if (isJump) {
-
-                playerRigidBody.AddForce(Vector3.right * jumpSpeed);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.A)) {
-            if (isJump) {
-
-                playerRigidBody.AddForce((Vector3.left * jumpSpeed));
-            }
-        }
 
         if (transform.position.y <= -groundLine) {
 
@@ -74,18 +44,13 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter(Collision collision) {
+    void OnControllerColliderHit(ControllerColliderHit hit) {
 
-        if (collision.gameObject.CompareTag("Stage")) {
+        if (hit.gameObject.CompareTag("Coin")) {
 
-            jumpCount = 0;
-        }
-
-        if (collision.gameObject.CompareTag("Coin")) {
-
+            Destroy(hit.gameObject);
             coinCount++;
             coinLabel.text = coinCount.ToString();
-            Destroy(collision.collider.gameObject);
         }
     }
 }
