@@ -2,37 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
+    // public
+    public Text coinLabel;
+
+    // private
     float speed = 5.0f;
     float jumpSpeed = 200f;
     float groundLine = 20.0f;
     float jumpPower = 400.0f;
-    int jumpCount = 0;
     int coinCount = 0;
 
     Animator animator;
 
-    bool isJump {
-
-        get { return jumpCount != 0; }
-    }
-
     void Start() {
 
         animator = GetComponent<Animator>();
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
     }
 
     void Update() {
 
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
         if (Input.GetKeyDown(KeyCode.Space)) {
 
-            if (!isJump) {
-
-                jumpCount += 1;
-                animator.SetBool("Jump", true);
-            }
+            animator.SetBool("Jump", true);
         } else {
 
             animator.SetBool("Jump", false);
@@ -42,6 +41,16 @@ public class PlayerController : MonoBehaviour {
         if (transform.position.y <= -groundLine) {
 
             SceneManager.LoadScene("GameOver");
+        }
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit) {
+
+        if (hit.gameObject.CompareTag("Coin")) {
+
+            Destroy(hit.gameObject);
+            coinCount++;
+            coinLabel.text = coinCount.ToString();
         }
     }
 }
