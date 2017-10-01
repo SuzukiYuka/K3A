@@ -8,13 +8,12 @@ public class PlayerController : MonoBehaviour {
 
     // public
     public Text coinLabel;
+    public Text scoreLabel;
 
     // private
-    float speed = 5.0f;
-    float jumpSpeed = 200f;
     float groundLine = 20.0f;
-    float jumpPower = 400.0f;
     int coinCount = 0;
+    int score = 0;
 
     Animator animator;
 
@@ -51,6 +50,12 @@ public class PlayerController : MonoBehaviour {
             Destroy(hit.gameObject);
             coinCount++;
             coinLabel.text = coinCount.ToString();
+        }
+
+        if (hit.gameObject.CompareTag("Enemy")) {
+
+            score -= 100;
+            scoreLabel.text = score.ToString();
         }
     }
 }
